@@ -9,23 +9,24 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
     doc = request.args.get('doc')
+    print('DOC :', doc)
     if len(doc) == 10:
         doc = '0' + doc
     if len(doc) == 9:
         doc = '00' + doc
-    
+
     if len(doc) == 11:
         cpf = '{}.{}.{}-{}'.format(doc[:3], doc[3:6], doc[6:9], doc[9:])
         print(cpf)
-        return cpf
+        return json.dumps({'data': cpf})
 
     if len(doc) == 14:
         cnpj = '{}.{}.{}/{}-{}'.format(doc[:2], doc[2:5], doc[5:8], doc[8:12], doc[12:14])
 
         print(cnpj)
-        return cnpj
+        return json.dumps({'data': cnpj})
 
-    # Se vier vazio
+    # Se estiver vazio
     return None
 
 if __name__ == "__main__":
